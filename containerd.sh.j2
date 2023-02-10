@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -x
+set -e
+set -u
+
+# https://github.com/containerd/containerd/blob/main/docs/getting-started.md#option-1-from-the-official-binaries
+# https://github.com/containerd/containerd/releases
+CONTAINERD_RELEASE_VERSION="1.6.17"
+ARCH="amd64"
+wget --quiet --timestamping https://github.com/containerd/containerd/releases/download/v${CONTAINERD_RELEASE_VERSION}/containerd-${CONTAINERD_RELEASE_VERSION}-linux-${ARCH}.tar.gz
+{% if not cache_only -%}
+sudo tar Cxzvf /usr/local containerd-${CONTAINERD_RELEASE_VERSION}-linux-${ARCH}.tar.gz
+sudo mkdir -p /usr/local/lib/systemd/system/
+curl -sSL https://raw.githubusercontent.com/containerd/containerd/main/containerd.service | sudo tee /usr/local/lib/systemd/system/containerd.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now containerd
+{% endif %}
+
+CNI_PLUGINS_VERSION="v1.1.1"
+ARCH="amd64"
+{% if not cache_only %}
+DEST="/opt/cni/bin"
+sudo mkdir -p "$DEST"
+{% endif -%}
+wget --quiet --timestamping "https://github.com/containernetworking/plugins/releases/download/${CNI_PLUGINS_VERSION}/cni-plugins-linux-${ARCH}-${CNI_PLUGINS_VERSION}.tgz"
+{% if not cache_only -%}
+cat cni-plugins-linux-${ARCH}-${CNI_PLUGINS_VERSION}.tgz | sudo tar xz -C "$DEST"
+{% endif %}
+
+{% if not cache_only %}
+DOWNLOAD_DIR="/usr/local/bin"
+sudo mkdir -p "$DOWNLOAD_DIR"
+{% endif %}
+
+CRICTL_VERSION="v1.25.0"
+ARCH="amd64"
+wget --quiet --timestamping "https://github.com/kubernetes-sigs/cri-tools/releases/download/${CRICTL_VERSION}/crictl-${CRICTL_VERSION}-linux-${ARCH}.tar.gz"
+{% if not cache_only -%}
+cat crictl-${CRICTL_VERSION}-linux-${ARCH}.tar.gz | sudo tar xz -C $DOWNLOAD_DIR
+{% endif %}
+
+RELEASE="$(curl -sSL https://dl.k8s.io/release/stable.txt)"
+ARCH="amd64"
+wget --quiet --timestamping https://dl.k8s.io/release/${RELEASE}/bin/linux/${ARCH}/kubeadm
+wget --quiet --timestamping https://dl.k8s.io/release/${RELEASE}/bin/linux/${ARCH}/kubelet
+{% if not cache_only %}
+sudo install --owner root --group root --mode 0755 kubeadm $DOWNLOAD_DIR/kubeadm
+sudo install --owner root --group root --mode 0755 kubelet $DOWNLOAD_DIR/kubelet
+{% endif %}
+
+{% if not cache_only %}
+RELEASE_VERSION="v0.4.0"
+sudo mkdir -p /etc/systemd/system/kubelet.service.d
+curl -sSL "https://raw.githubusercontent.com/kubernetes/release/${RELEASE_VERSION}/cmd/kubepkg/templates/latest/deb/kubelet/lib/systemd/system/kubelet.service" | sed "s:/usr/bin:${DOWNLOAD_DIR}:g" | sudo tee /etc/systemd/system/kubelet.service
+curl -sSL "https://raw.githubusercontent.com/kubernetes/release/${RELEASE_VERSION}/cmd/kubepkg/templates/latest/deb/kubeadm/10-kubeadm.conf" | sed "s:/usr/bin:${DOWNLOAD_DIR}:g" | sudo tee /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+{% endif %}
+
+{% if not cache_only %}
+sudo systemctl enable --now kubelet
+{% endif %}

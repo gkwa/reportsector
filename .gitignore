@@ -1,3 +1,21 @@
+.vagrant/
+cache.sh
+cache_cni_plugins.sh
+cache_containerd.sh
+cache_kubectl.sh
+cache_nerdctl.sh
+cache_runc.sh
+install.sh
+install_cni_plugins.sh
+install_containerd.sh
+install_kubectl.sh
+install_nerdctl.sh
+install_runc.sh
+stage/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(.venv) (.venv)[mtm@taylors-MacBook-Pro-2:reportsector(master)]$
+
 # Temporary and binary files
 *~
 *.py[cod]
