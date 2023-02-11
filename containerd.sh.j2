@@ -40,6 +40,9 @@ wget --quiet --timestamping "https://github.com/kubernetes-sigs/cri-tools/releas
 cat crictl-${CRICTL_VERSION}-linux-${ARCH}.tar.gz | sudo tar xz -C $DOWNLOAD_DIR
 {% endif %}
 
+###############################
+# install kubeadm and kubelet
+###############################
 RELEASE="$(curl -sSL https://dl.k8s.io/release/stable.txt)"
 ARCH="amd64"
 wget --quiet --timestamping https://dl.k8s.io/release/${RELEASE}/bin/linux/${ARCH}/kubeadm

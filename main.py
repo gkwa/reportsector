@@ -13,8 +13,8 @@ def prettify_paths(*paths: typing.List[pathlib.Path]):
         "4",
         "-w",
     ]
-    z = [str(x.resolve()) for x in paths]
-    cmd.extend(z)
+    paths_as_strings = [str(x.resolve()) for x in paths]
+    cmd.extend(paths_as_strings)
 
     proc = subprocess.Popen(
         cmd,
@@ -41,6 +41,7 @@ loader = jinja2.FileSystemLoader(searchpath=templates_dir)
 env = jinja2.Environment(loader=loader, keep_trailing_newline=True)
 cache_paths = []
 install_paths = []
+other_script_paths = []
 
 ##############################
 # containerd
@@ -109,9 +110,20 @@ rendered = template.render(cache_only=False)
 path.write_text(rendered)
 path.chmod(0o775)
 
+##############################
+# kubeadmin init
+##############################
+
+template = env.get_template("kubeadm-init.sh.j2")
+path = pathlib.Path("kubeadm-init.sh")
+other_script_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
 # end scripts
 
-all_paths = cache_paths + install_paths
+all_paths = cache_paths + install_paths + other_script_paths
 prettify_paths(*all_paths)
 
 cache_dir = pathlib.Path("stage")

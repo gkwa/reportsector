@@ -5,6 +5,7 @@ cache_kubectl.sh
 cache_nerdctl.sh
 cache_runc.sh
 install.sh
+kubeadm-init.sh
 install_containerd.sh
 install_kubectl.sh
 install_nerdctl.sh

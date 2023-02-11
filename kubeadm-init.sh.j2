@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
+
+cat >kubeadm-config.yaml <<EOF
+# https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
+
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+kubernetesVersion: v1.26.1
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
+EOF
+sudo kubeadm init --v=100 --config kubeadm-config.yaml
+kubectl get configmap --all-namespaces
