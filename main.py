@@ -6,15 +6,15 @@ import typing
 import jinja2
 
 
-def prettify_paths(paths: typing.List[pathlib.Path]):
-    x = [str(path.resolve()) for path in paths]
+def prettify_paths(*paths: typing.List[pathlib.Path]):
     cmd = [
         "shfmt",
         "-i",
         "4",
         "-w",
-        *x,
     ]
+    z = [str(x.resolve()) for x in paths]
+    cmd.extend(z)
 
     proc = subprocess.Popen(
         cmd,
@@ -76,23 +76,6 @@ path.write_text(rendered)
 path.chmod(0o775)
 
 ##############################
-# cni plugins
-##############################
-
-template = env.get_template("cni_plugins.sh.j2")
-path = pathlib.Path("cache_cni_plugins.sh")
-cache_paths.append(path)
-rendered = template.render(cache_only=True)
-path.write_text(rendered)
-path.chmod(0o775)
-
-path = pathlib.Path("install_cni_plugins.sh")
-install_paths.append(path)
-rendered = template.render(cache_only=False)
-path.write_text(rendered)
-path.chmod(0o775)
-
-##############################
 # kubectl
 ##############################
 
@@ -129,7 +112,7 @@ path.chmod(0o775)
 # end scripts
 
 all_paths = cache_paths + install_paths
-prettify_paths(all_paths)
+prettify_paths(*all_paths)
 
 cache_dir = pathlib.Path("stage")
 pathlib.Path.mkdir(cache_dir, parents=True, exist_ok=True)
