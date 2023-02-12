@@ -13,6 +13,11 @@ wget --quiet --timestamping https://github.com/containerd/containerd/releases/do
 sudo tar Cxzvf /usr/local containerd-${CONTAINERD_RELEASE_VERSION}-linux-${ARCH}.tar.gz
 sudo mkdir -p /usr/local/lib/systemd/system/
 curl -sSL https://raw.githubusercontent.com/containerd/containerd/main/containerd.service | sudo tee /usr/local/lib/systemd/system/containerd.service
+
+# https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd-systemd
+mkdir -p /etc/containerd/
+containerd config default >/etc/containerd/config.toml
+
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 {% endif %}

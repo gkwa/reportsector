@@ -111,6 +111,40 @@ path.write_text(rendered)
 path.chmod(0o775)
 
 ##############################
+# yj install
+##############################
+
+template = env.get_template("yj.sh.j2")
+path = pathlib.Path("cache_yj.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_yj.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
+# yq install
+##############################
+
+template = env.get_template("yq.sh.j2")
+path = pathlib.Path("cache_yq.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_yq.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
 # kubeadmin init
 ##############################
 
@@ -120,7 +154,6 @@ other_script_paths.append(path)
 rendered = template.render(cache_only=True)
 path.write_text(rendered)
 path.chmod(0o775)
-
 # end scripts
 
 all_paths = cache_paths + install_paths + other_script_paths
