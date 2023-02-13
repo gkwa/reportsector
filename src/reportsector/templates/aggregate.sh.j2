@@ -2,7 +2,7 @@
 {% include "bash.sh.j2" %}
 {% endif %}
 
-{% macro all(cache_only) -%}
+{% macro all(cache_only=False) -%}
 {% import 'yq.sh.j2' as yq -%}
 {{ yq.yq(cache_only) }}
 

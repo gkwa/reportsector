@@ -2,7 +2,7 @@
 {% include "bash.sh.j2" %}
 {% endif %}
 
-{% macro kubeadm(cache_only) -%}
+{% macro kubeadm(cache_only=False) -%}
 {%- if not cache_only -%}
 
 # https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/

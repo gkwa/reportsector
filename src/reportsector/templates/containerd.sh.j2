@@ -2,7 +2,7 @@
 {% include "bash.sh.j2" %}
 {% endif %}
 
-{% macro containerd(cache_only) -%}
+{% macro containerd(cache_only=False) -%}
 # https://github.com/containerd/containerd/blob/main/docs/getting-started.md#option-1-from-the-official-binaries
 # https://github.com/containerd/containerd/releases
 CONTAINERD_RELEASE_VERSION="1.6.17"
