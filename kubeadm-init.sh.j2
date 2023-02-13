@@ -1,10 +1,12 @@
-{% block bash_preamble %}
+{% if not embedded -%}
+{% include "bash.sh.j2" %}
+{% endif %}
+
+{% macro kubeadm(cache_only) -%}
+{%- if not cache_only -%}
 
 # https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
-
 cat >kubeadm-config.yaml <<EOF
-# https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
-
 kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
 kubernetesVersion: v1.26.1
@@ -15,3 +17,7 @@ cgroupDriver: systemd
 EOF
 sudo kubeadm init --v=100 --config kubeadm-config.yaml
 kubectl get configmap --all-namespaces
+{% endif %}
+{% endmacro %}
+
+{% block content %}{{ kubeadm() }}{% endblock %}

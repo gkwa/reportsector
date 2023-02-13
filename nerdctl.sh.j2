@@ -1,5 +1,8 @@
-{% block bash_preamble %}
+{% if not embedded -%}
+{% include "bash.sh.j2" %}
+{% endif %}
 
+{% macro nerdctl(cache_only) -%}
 version=$(curl -s https://api.github.com/repos/containerd/nerdctl/releases/latest | grep tag_name | cut -d: -f2 | tr -d 'v," ')
 echo $version
 wget --quiet --timestamping https://github.com/containerd/nerdctl/releases/download/v${version}/nerdctl-full-${version}-linux-amd64.tar.gz
@@ -16,5 +19,10 @@ sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux
 sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/rootlessctl /usr/local/bin/rootlessctl
 sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/slirp4netns /usr/local/bin/slirp4netns
 
-nerdctl-full-${version}-linux-amd64/bin/containerd-rootless-setuptool.sh install # its required to run as regular user, not root
+# next line is required to run as regular user, not root:
+nerdctl-full-${version}-linux-amd64/bin/containerd-rootless-setuptool.sh install
 {% endif %}
+
+{% endmacro %}
+
+{% block content %}{{ nerdctl() }}{% endblock %}

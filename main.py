@@ -44,9 +44,25 @@ install_paths = []
 other_script_paths = []
 
 ##############################
+# yq install
+##############################
+template = env.get_template("yq.sh.j2")
+path = pathlib.Path("cache_yq.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_yq.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
 # yj install
 ##############################
-template = env.get_template("yj.sh.j2")
+template = env.get_template("yq.sh.j2")
 path = pathlib.Path("cache_yj.sh")
 cache_paths.append(path)
 rendered = template.render(cache_only=True)
@@ -59,31 +75,104 @@ rendered = template.render(cache_only=False)
 path.write_text(rendered)
 path.chmod(0o775)
 
-all_paths = cache_paths + install_paths + other_script_paths
-prettify_paths(*all_paths)
+##############################
+# containerd
+##############################
+template = env.get_template("containerd.sh.j2")
+path = pathlib.Path("cache_containerd.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_containerd.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
+# runc
+##############################
+template = env.get_template("runc.sh.j2")
+path = pathlib.Path("cache_runc.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_runc.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
+# kubectl
+##############################
+template = env.get_template("kubectl.sh.j2")
+path = pathlib.Path("cache_kubectl.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_kubectl.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
+# nerdctl
+##############################
+template = env.get_template("nerdctl.sh.j2")
+path = pathlib.Path("cache_nerdctl.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_nerdctl.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
+# kubeadmin init
+##############################
+template = env.get_template("kubeadm-init.sh.j2")
+path = pathlib.Path("kubeadm-init.sh")
+other_script_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
+# install.sh
+##############################
+template = env.get_template("aggregate.sh.j2")
+path = pathlib.Path("install.sh")
+other_script_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
+# cache.sh
+##############################
+template = env.get_template("aggregate.sh.j2")
+path = pathlib.Path("cache.sh")
+other_script_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+# end scripts
+
+script_paths = cache_paths + install_paths + other_script_paths
+prettify_paths(*script_paths)
 
 cache_dir = pathlib.Path("stage")
 pathlib.Path.mkdir(cache_dir, parents=True, exist_ok=True)
-
-cache_path = pathlib.Path("cache.sh")
-cache_path.unlink(missing_ok=True)
-with cache_path.open("a") as f:
-    for path in cache_paths:
-        f.write(f"cd {cache_dir.resolve()}")
-        f.write("\n")
-
-        text = path.read_text()
-        f.write(text)
-        f.write("\n")
-
-cache_path.chmod(0o775)
-
-install_path = pathlib.Path("install.sh")
-install_path.unlink(missing_ok=True)
-with install_path.open("a") as f:
-    for path in install_paths:
-        text = path.read_text()
-        f.write(text)
-        f.write("\n")
-
-install_path.chmod(0o775)

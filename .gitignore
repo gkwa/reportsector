@@ -1,3 +1,15 @@
+.envrc
+all.sh
+cache_yj.sh
+cache_yq.sh
+config.json
+config.toml
+config.yaml
+install_yj.sh
+install_yq.sh
+test_setup.py
+test_setup.sh
+
 .vagrant/
 cache.sh
 cache_containerd.sh
