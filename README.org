@@ -6,7 +6,7 @@ next
 #+begin_example
 pip install reportsector
 reportsector
-./cache.sh
+ls ./cache.sh # assert reportsector generated new cache.sh from template
 #+end_example
 
 next
