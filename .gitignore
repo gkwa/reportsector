@@ -1,27 +1,35 @@
-.envrc
-all.sh
-cache_yj.sh
-cache_yq.sh
-config.json
-config.toml
-config.yaml
-install_yj.sh
-install_yq.sh
-test_setup.py
-test_setup.sh
+cni-plugins-linux-amd64-*.tgz
+containerd-*-linux-amd64.tar.gz
+crictl-*-linux-amd64.tar.gz
+nerdctl-full-*-linux-amd64.tar.gz
+yj-linux-amd64
+yq_linux_amd64
 
+.envrc
 .vagrant/
 cache.sh
 cache_containerd.sh
 cache_kubectl.sh
 cache_nerdctl.sh
 cache_runc.sh
+cache_yj.sh
+cache_yq.sh
+config.json
+config.toml
+config.yaml
 install.sh
-kubeadm-init.sh
 install_containerd.sh
 install_kubectl.sh
 install_nerdctl.sh
 install_runc.sh
+install_yj.sh
+install_yq.sh
+kubeadm
+kubeadm-init.sh
+kubectl
+kubectl.sha256
+kubelet
+runc.amd64
 stage/
 
 # Temporary and binary files
