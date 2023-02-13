@@ -1,1 +1,39 @@
 Scripts to help me iterate on installing kubernetes in virtualbox.
+
+Install shfmt https://github.com/mvdan/sh#sh
+
+next
+```bash
+pip install reportsector
+reportsector
+./cache.sh
+```
+
+next
+```bash
+vagrant destroy --force &&
+vagrant up &&
+source .venv/bin/activate &&
+reportsector &&
+./cache.sh  &&
+./vagrant_upload.sh &&
+vagrant ssh --command 'sudo ./misc.sh' &&
+vagrant ssh --command './install.sh' &&
+vagrant ssh
+```
+
+next
+```bash
+nerdctl run -it --rm alpine cat /etc/os-release
+time sudo kubeadm config images pull --v=100 # takes 5m at starbucks, 30s at home
+```
+
+next
+```bash
+sudo ./kubeadm-init.sh
+mkdir -p $HOME/.kube
+sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl get configmap/kubeadm-config -n kube-system -oyaml
+kubectl cluster-info
+```
