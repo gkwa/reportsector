@@ -25,4 +25,4 @@ nerdctl-full-${version}-linux-amd64/bin/containerd-rootless-setuptool.sh install
 
 {% endmacro %}
 
-{% block content %}{{ nerdctl() }}{% endblock %}
+{% block content %}{{ nerdctl(cache_only) }}{% endblock %}

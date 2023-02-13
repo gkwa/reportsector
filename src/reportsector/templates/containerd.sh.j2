@@ -79,4 +79,4 @@ sudo systemctl enable --now kubelet
 {% endif %}
 {% endmacro %}
 
-{% block content %}{{ containerd() }}{% endblock %}
+{% block content %}{{ containerd(cache_only) }}{% endblock %}

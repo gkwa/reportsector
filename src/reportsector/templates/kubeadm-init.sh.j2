@@ -20,4 +20,4 @@ kubectl get configmap --all-namespaces
 {% endif %}
 {% endmacro %}
 
-{% block content %}{{ kubeadm() }}{% endblock %}
+{% block content %}{{ kubeadm(cache_only) }}{% endblock %}

@@ -14,4 +14,4 @@ kubectl version --output=yaml --client|awk '/gitVersion/{print $2;}'
 {% endif %}
 {% endmacro %}
 
-{% block content %}{{ kubectl() }}{% endblock %}
+{% block content %}{{ kubectl(cache_only) }}{% endblock %}

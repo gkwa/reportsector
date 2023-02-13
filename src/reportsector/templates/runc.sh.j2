@@ -10,4 +10,4 @@ runc --version
 {% endif %}
 {% endmacro %}
 
-{% block content %}{{ runc() }} {% endblock %}
+{% block content %}{{ runc(cache_only) }} {% endblock %}

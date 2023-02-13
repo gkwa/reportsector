@@ -12,4 +12,4 @@ yj -v && rm -f yj-linux-amd64
 {% endif %}
 {% endmacro %}
 
-{% block content %}{{ yj() }}{% endblock %}
+{% block content %}{{ yj(cache_only) }}{% endblock %}
