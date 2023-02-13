@@ -2,6 +2,10 @@ Scripts to help me iterate on installing kubernetes using kubeadm in virtualbox 
 
 Following steps from https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm
 
+When I screw up, I want to be able to start from scratch in order to eliminate variables.
+
+I'm on a bad internet conection so I want to cache large files on virtualbox host and copy them to vm.
+
 First install dependency shfmt from https://github.com/mvdan/sh#sh
 
 next
@@ -14,7 +18,8 @@ next
 #+begin_example
 pip install reportsector
 reportsector
-ls ./cache.sh # assert reportsector generated new cache.sh from template
+# assert reportsector generated new cache.sh from template
+ls ./cache.sh
 #+end_example
 
 next
@@ -32,6 +37,7 @@ vagrant ssh
 
 next
 #+begin_example
+# validate that runc can run a container:
 nerdctl run -it --rm alpine cat /etc/os-release
 time sudo kubeadm config images pull --v=100 # takes 5m at starbucks, 30s at home
 #+end_example
