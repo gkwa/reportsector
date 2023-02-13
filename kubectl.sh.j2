@@ -1,8 +1,4 @@
-#!/usr/bin/env bash
-
-set -x
-set -e
-set -u
+{% block bash_preamble %}
 
 version=$(curl -L -s https://dl.k8s.io/release/stable.txt | tr -d v)
 echo $version
