@@ -1,6 +1,12 @@
 Scripts to help me iterate on installing kubernetes in virtualbox.
 
-Install shfmt https://github.com/mvdan/sh#sh
+First install dependency shfmt from https://github.com/mvdan/sh#sh
+
+next
+#+begin_example
+git clone https://github.com/TaylorMonacelli/reportsector
+cd reportsector
+#+end_example
 
 next
 #+begin_example
