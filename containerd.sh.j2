@@ -15,11 +15,22 @@ sudo mkdir -p /usr/local/lib/systemd/system/
 curl -sSL https://raw.githubusercontent.com/containerd/containerd/main/containerd.service | sudo tee /usr/local/lib/systemd/system/containerd.service
 
 # https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd-systemd
-mkdir -p /etc/containerd/
-containerd config default >/etc/containerd/config.toml
+sudo mkdir -p /etc/containerd/
+containerd config default | sudo tee /etc/containerd/config.toml
+head /etc/containerd/config.toml
+
+tmp=$(mktemp -d /tmp/config.XXXX)
+cat /etc/containerd/config.toml | yj -i -tt >$tmp/config.toml.1
+cat $tmp/config.toml.1 | yj -ty | yq '.plugins["io.containerd.grpc.v1.cri"].containerd.runtimes.runc.options.SystemdCgroup = true' | yj -i -yt >$tmp/config.toml.2
+yq '.plugins["io.containerd.grpc.v1.cri"].containerd.runtimes.runc.options.SystemdCgroup' $tmp/config.toml.1 $tmp/config.toml.2 # show that old is false and new is true
+set +e
+diff -uw $tmp/config.toml.1 $tmp/config.toml.2
+set -e
+cat $tmp/config.toml.2 | sudo tee /etc/containerd/config.toml
 
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
+systemctl is-active containerd
 {% endif %}
 
 CNI_PLUGINS_VERSION="v1.1.1"

@@ -44,6 +44,38 @@ install_paths = []
 other_script_paths = []
 
 ##############################
+# yj install
+##############################
+template = env.get_template("yj.sh.j2")
+path = pathlib.Path("cache_yj.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_yj.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
+# yq install
+##############################
+template = env.get_template("yq.sh.j2")
+path = pathlib.Path("cache_yq.sh")
+cache_paths.append(path)
+rendered = template.render(cache_only=True)
+path.write_text(rendered)
+path.chmod(0o775)
+
+path = pathlib.Path("install_yq.sh")
+install_paths.append(path)
+rendered = template.render(cache_only=False)
+path.write_text(rendered)
+path.chmod(0o775)
+
+##############################
 # containerd
 ##############################
 template = env.get_template("containerd.sh.j2")
@@ -62,7 +94,6 @@ path.chmod(0o775)
 ##############################
 # runc
 ##############################
-
 template = env.get_template("runc.sh.j2")
 path = pathlib.Path("cache_runc.sh")
 cache_paths.append(path)
@@ -79,7 +110,6 @@ path.chmod(0o775)
 ##############################
 # kubectl
 ##############################
-
 template = env.get_template("kubectl.sh.j2")
 path = pathlib.Path("cache_kubectl.sh")
 cache_paths.append(path)
@@ -96,7 +126,6 @@ path.chmod(0o775)
 ##############################
 # nerdctl
 ##############################
-
 template = env.get_template("nerdctl.sh.j2")
 path = pathlib.Path("cache_nerdctl.sh")
 cache_paths.append(path)
@@ -111,43 +140,8 @@ path.write_text(rendered)
 path.chmod(0o775)
 
 ##############################
-# yj install
-##############################
-
-template = env.get_template("yj.sh.j2")
-path = pathlib.Path("cache_yj.sh")
-cache_paths.append(path)
-rendered = template.render(cache_only=True)
-path.write_text(rendered)
-path.chmod(0o775)
-
-path = pathlib.Path("install_yj.sh")
-install_paths.append(path)
-rendered = template.render(cache_only=False)
-path.write_text(rendered)
-path.chmod(0o775)
-
-##############################
-# yq install
-##############################
-
-template = env.get_template("yq.sh.j2")
-path = pathlib.Path("cache_yq.sh")
-cache_paths.append(path)
-rendered = template.render(cache_only=True)
-path.write_text(rendered)
-path.chmod(0o775)
-
-path = pathlib.Path("install_yq.sh")
-install_paths.append(path)
-rendered = template.render(cache_only=False)
-path.write_text(rendered)
-path.chmod(0o775)
-
-##############################
 # kubeadmin init
 ##############################
-
 template = env.get_template("kubeadm-init.sh.j2")
 path = pathlib.Path("kubeadm-init.sh")
 other_script_paths.append(path)

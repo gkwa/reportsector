@@ -18,10 +18,7 @@ nerdctl --version
 sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/containerd-rootless.sh /usr/local/bin/containerd-rootless.sh
 sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/rootlesskit /usr/local/bin/rootlesskit
 sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/rootlessctl /usr/local/bin/rootlessctl
-sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/containerd-rootless.sh /usr/local/bin/containerd-rootless.sh
-sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/rootlesskit /usr/local/bin/rootlesskit
-sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/rootlessctl /usr/local/bin/rootlessctl
 sudo install --mode 0755 --group root --owner root nerdctl-full-${version}-linux-amd64/bin/slirp4netns /usr/local/bin/slirp4netns
 
-nerdctl-full-${version}-linux-amd64/bin/containerd-rootless-setuptool.sh install # required to not run as sudo
+nerdctl-full-${version}-linux-amd64/bin/containerd-rootless-setuptool.sh install # its required to run as regular user, not root
 {% endif %}
