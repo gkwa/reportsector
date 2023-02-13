@@ -3,6 +3,7 @@ Scripts to help me iterate on installing kubernetes in virtualbox.
 Install shfmt https://github.com/mvdan/sh#sh
 
 next
+
 ```bash
 pip install reportsector
 reportsector
@@ -10,6 +11,7 @@ reportsector
 ```
 
 next
+
 ```bash
 vagrant destroy --force &&
 vagrant up &&
@@ -23,12 +25,14 @@ vagrant ssh
 ```
 
 next
+
 ```bash
 nerdctl run -it --rm alpine cat /etc/os-release
 time sudo kubeadm config images pull --v=100 # takes 5m at starbucks, 30s at home
 ```
 
 next
+
 ```bash
 sudo ./kubeadm-init.sh
 mkdir -p $HOME/.kube
