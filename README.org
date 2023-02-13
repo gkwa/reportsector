@@ -16,6 +16,16 @@ cd reportsector
 
 next, on macos host:
 #+begin_example
+deactivate 2>/dev/null || true
+rm -rf .venv
+python3 -mvenv .venv
+echo source $(pwd)/.venv/bin/activate
+source $(pwd)/.venv/bin/activate
+pip install --upgrade pip
+#+end_example
+
+next, on macos host:
+#+begin_example
 pip install reportsector
 reportsector
 # assert reportsector generated new cache.sh from template

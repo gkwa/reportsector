@@ -10,6 +10,7 @@ sudo sed -i $'/\tswap\t/ s/^/#/' /etc/fstab
 sudo apt-get update
 sudo apt-get -y install socat
 sudo apt-get -y install conntrack
+sudo apt-get -y install bash-completion
 
 # https://kubernetes.io/docs/setup/production-environment/container-runtimes/#forwarding-ipv4-and-letting-iptables-see-bridged-traffic
 cat <<EOF |sudo tee /etc/modules-load.d/k8s.conf
