@@ -8,13 +8,13 @@ I'm on a bad internet conection so I want to cache large files on virtualbox hos
 
 First install dependency shfmt from https://github.com/mvdan/sh#sh
 
-next
+next on macos host:
 #+begin_example
 git clone https://github.com/TaylorMonacelli/reportsector
 cd reportsector
 #+end_example
 
-next
+next on macos host:
 #+begin_example
 pip install reportsector
 reportsector
@@ -22,7 +22,7 @@ reportsector
 ls ./cache.sh
 #+end_example
 
-next
+next on macos host:
 #+begin_example
 vagrant destroy --force &&
 vagrant up &&
@@ -35,14 +35,14 @@ vagrant ssh --command './install.sh' &&
 vagrant ssh
 #+end_example
 
-next
+next on the vm:
 #+begin_example
-# validate that runc can run a container:
+# smoke test that runc can run a container:
 nerdctl run -it --rm alpine cat /etc/os-release
 time sudo kubeadm config images pull --v=100 # takes 5m at starbucks, 30s at home
 #+end_example
 
-next
+next on the vm:
 #+begin_example
 sudo ./kubeadm-init.sh
 mkdir -p $HOME/.kube
