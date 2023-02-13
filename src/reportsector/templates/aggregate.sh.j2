@@ -2,7 +2,6 @@
 {% include "bash.sh.j2" %}
 {% endif %}
 
-
 {% macro all(cache_only=False) -%}
 {% import 'yq.sh.j2' as yq -%}
 {{ yq.yq(cache_only) }}
@@ -30,4 +29,14 @@
 {% endmacro %}
 
 
-{% block content %}{{ all(cache_only) }}{% endblock %}
+{% block content %}
+
+{% if cache_only %}
+rm -f archive.tar
+{% else %}
+if [[ -f archive.tar ]]; then
+    tar xvf archive.tar
+fi
+{% endif %}
+{{ all(cache_only) }}
+{% endblock %}

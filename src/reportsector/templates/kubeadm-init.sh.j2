@@ -15,7 +15,8 @@ kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
 cgroupDriver: systemd
 EOF
-sudo kubeadm init --v=100 --config kubeadm-config.yaml
+kubeadm config images list
+sudo kubeadm init --config kubeadm-config.yaml
 {% endif %}
 {% endmacro %}
 

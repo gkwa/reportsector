@@ -5,8 +5,10 @@
 {% macro kubectl(cache_only=False) -%}
 version=$(curl -L -s https://dl.k8s.io/release/stable.txt | tr -d v)
 echo $version
-wget --quiet --timestamping "https://dl.k8s.io/release/v$version/bin/linux/amd64/kubectl"
-wget --quiet --timestamping "https://dl.k8s.io/v$version/bin/linux/amd64/kubectl.sha256"
+wget --quiet --timestamping https://dl.k8s.io/release/v$version/bin/linux/amd64/kubectl
+wget --quiet --timestamping https://dl.k8s.io/v$version/bin/linux/amd64/kubectl.sha256
+tar -f archive.tar -r kubectl
+tar -f archive.tar -r kubectl.sha256
 {% if not cache_only -%}
 echo "$(cat kubectl.sha256) kubectl" | sha256sum --check
 sudo install --owner root --group root --mode 0755 kubectl /usr/local/bin/kubectl

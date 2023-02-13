@@ -38,10 +38,12 @@ vagrant destroy --force &&
 vagrant up &&
 source .venv/bin/activate &&
 reportsector &&
-./cache.sh  &&
-./vagrant_upload.sh &&
+./cache.sh &&
+tar -f archive.tar -r *.sh &&
+vagrant scp archive.tar default: &&
+vagrant ssh --command 'tar xvf archive.tar' &&
 vagrant ssh --command 'sudo ./misc.sh' &&
-vagrant ssh --command './install.sh' &&
+vagrant ssh --command ./install.sh &&
 vagrant ssh
 #+end_example
 
