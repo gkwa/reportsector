@@ -1,4 +1,6 @@
-Scripts to help me iterate on installing kubernetes in virtualbox.
+Scripts to help me iterate on installing kubernetes using kubeadm in virtualbox.
+
+Following steps from https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm
 
 First install dependency shfmt from https://github.com/mvdan/sh#sh
 
