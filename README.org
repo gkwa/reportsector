@@ -1,4 +1,4 @@
-Scripts to help me iterate on installing kubernetes using kubeadm in virtualbox.
+Scripts to help me iterate on installing kubernetes using kubeadm in virtualbox on macos.
 
 Following steps from https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm
 
