@@ -123,6 +123,22 @@ def main():
     path.chmod(0o775)
 
     ##############################
+    # buildkit install
+    ##############################
+    template = env.get_template("buildkit.sh.j2")
+    path = pathlib.Path("cache_buildkit.sh")
+    cache_paths.append(path)
+    rendered = template.render(cache_only=True)
+    path.write_text(rendered)
+    path.chmod(0o775)
+
+    path = pathlib.Path("install_buildkit.sh")
+    install_paths.append(path)
+    rendered = template.render(cache_only=False)
+    path.write_text(rendered)
+    path.chmod(0o775)
+
+    ##############################
     # install.sh
     ##############################
     template = env.get_template("aggregate.sh.j2")

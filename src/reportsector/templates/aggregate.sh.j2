@@ -2,6 +2,7 @@
 {% include "bash.sh.j2" %}
 {% endif %}
 
+
 {% macro all(cache_only=False) -%}
 {% import 'yq.sh.j2' as yq -%}
 {{ yq.yq(cache_only) }}
@@ -23,6 +24,10 @@
 
 {% import "kubeadm-init.sh.j2" as kubeadm %}
 {{ kubeadm.kubeadm(cache_only) }}
+
+{% import "buildkit.sh.j2" as buildkit %}
+{{ buildkit.buildkit(cache_only) }}
 {% endmacro %}
+
 
 {% block content %}{{ all(cache_only) }}{% endblock %}
