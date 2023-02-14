@@ -28,7 +28,7 @@ diff -uw $tmp/config.toml.1 $tmp/config.toml.2
 set -e
 cat $tmp/config.toml.2 | sudo tee /etc/containerd/config.toml
 
-sudo systemctl daemon--appendeload
+sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 systemctl is-active containerd
 {% endif %}
