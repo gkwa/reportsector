@@ -4,7 +4,7 @@
 
 {% macro kubeadm(cache_only=False) -%}
 {%- if cache_only -%}
-tar -f archive.tar --append registry-*
+tar -f archive_reportsector.tar --append registry-*
 {% endif %}
 
 {%- if not cache_only -%}

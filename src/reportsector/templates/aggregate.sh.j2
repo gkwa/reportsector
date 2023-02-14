@@ -32,10 +32,10 @@
 {% block content %}
 
 {% if cache_only %}
-rm -f archive.tar
+rm -f archive_reportsector.tar
 {% else %}
-if [[ -f archive.tar ]]; then
-    tar xvf archive.tar
+if [[ -f archive_reportsector.tar ]]; then
+    tar xvf archive_reportsector.tar
 fi
 {% endif %}
 {{ all(cache_only) }}
