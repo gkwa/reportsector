@@ -3,6 +3,10 @@
 {% endif %}
 
 {% macro kubeadm(cache_only=False) -%}
+{%- if cache_only -%}
+tar -f archive.tar --append registry-*
+{% endif %}
+
 {%- if not cache_only -%}
 
 # https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
@@ -16,7 +20,16 @@ apiVersion: kubelet.config.k8s.io/v1beta1
 cgroupDriver: systemd
 EOF
 kubeadm config images list
-sudo kubeadm init --config kubeadm-config.yaml
+
+sleep 5
+
+# https://stackoverflow.com/a/69995137/1495086
+for image in registry-*; do
+    sudo ctr -n=k8s.io images import $image
+    # nerdctl load -i $image
+done
+
+sudo kubeadm init --v=10 --config kubeadm-config.yaml
 {% endif %}
 {% endmacro %}
 

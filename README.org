@@ -8,6 +8,10 @@ I'm on a bad internet conection so I want to cache large files on virtualbox hos
 
 First install dependency shfmt from https://github.com/mvdan/sh#sh
 
+#+begin_example
+vagrant plugin install vagrant-scp
+#+end_example
+
 next, on macos host:
 #+begin_example
 git clone https://github.com/TaylorMonacelli/reportsector
